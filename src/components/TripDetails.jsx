@@ -1,11 +1,11 @@
 import React from "react";
 
-const TripDetails = ({ depart, arrive, time, kms }) => {
+const TripDetails = ({ action, depart, arrive, time, kms }) => {
 	return (
 		<div>
 			<li className='flex flex-row mb-2 border-gray-400'>
 				<div className='shadow border select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4'>
-					<div className='flex-1 pl-1 md:mr-16'>
+					<di v className='flex-1 pl-1 md:mr-16'>
 						<div className='font-medium dark:text-white'>{depart}</div>
 						<div className=' h-2 w-2 border-x-2 border-teal-600 border-t-2 rounded-t-md '></div>
 						<div className=' h-2 w-2 border-x-2 border-teal-600'></div>
@@ -14,7 +14,7 @@ const TripDetails = ({ depart, arrive, time, kms }) => {
 						<div className=' h-2 w-2 border-x-2 border-teal-600'></div>
 						<div className=' h-2 w-2 border-x-2 border-teal-600 border-b-2 rounded-b-md '></div>
 						<div className='font-medium dark:text-white'>{arrive}</div>
-					</div>
+					</di>
 					<div className='flex-2 pl-1 md:mr-16'>
 						<div className='text-xs text-gray-600 dark:text-gray-400 p-2'>
 							{time}

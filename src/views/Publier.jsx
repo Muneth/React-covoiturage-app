@@ -3,15 +3,18 @@ import PageComponent from "../components/PageComponent";
 import { useState } from "react";
 import axiosClient from "../axios.js";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Publier = () => {
-	const { currentUser, userToken, currentUserId } = useStateContext();
+	const { currentUserId } = useStateContext();
 	const [villeDepart, setVilleDepart] = useState("");
 	const [villeArrive, setVilleArrive] = useState("");
 	const [date, setDate] = useState("");
 	const [kms, setKms] = useState("");
 	const [sucess, setSucess] = useState({ __html: "" });
 	const [error, setError] = useState({ __html: "" });
+
+	const navigate = useNavigate();
 
 	const publish = async (e) => {
 		e.preventDefault();
@@ -36,6 +39,7 @@ const Publier = () => {
 				);
 				console.log("data", response);
 				setSucess({ __html: "Votre trajet a été publié" });
+				navigate("/vostrajets");
 			} catch (error) {
 				if (error.response) {
 					const backendErrors = error.response.data;

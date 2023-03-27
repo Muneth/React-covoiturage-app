@@ -5,11 +5,11 @@ import { Navigate, NavLink, Outlet } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 
 const navigation = [
-	{ name: "Rechercher", to: "/" },
+	{ name: "Trajets", to: "/" },
+	{ name: "Rechercher", to: "/search" },
 	{ name: "Vos Trajets", to: "/vostrajets" },
 	{ name: "Publier", to: "/publier" },
 	{ name: "Profil", to: "/profil" },
-	{ name: "Trajets", to: "/alltrips" },
 ];
 
 function classNames(...classes) {

@@ -2,26 +2,14 @@ import { useState, useEffect } from "react";
 import PageComponent from "../components/PageComponent";
 import TripDetails from "../components/TripDetails";
 import axiosClient from "../axios";
+import { useLoaderData, json } from "react-router-dom";
 
 const AllTrips = () => {
-	const [trips, setTrips] = useState([]);
-
-	async function fetchTrips() {
-		try {
-			const response = await axiosClient.get("/api/trajet");
-			setTrips(response.data);
-			console.log("response.data", response.data);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	useEffect(() => {
-		fetchTrips();
-	}, []);
+	const trips = useLoaderData();
+	// const trips = useLoaderData((data) => data.trips);
 
 	return (
-		<PageComponent title='Liste De Votre Trajets'>
+		<PageComponent title='Trajets'>
 			<div className='container flex flex-col items-center justify-center w-full mx-auto'>
 				<ul className='flex flex-col'>
 					{trips.map((trip) => (
@@ -40,3 +28,12 @@ const AllTrips = () => {
 };
 
 export default AllTrips;
+
+export const loader = async () => {
+	const response = await axiosClient.get("/api/trajet");
+	if (!response.status === 200) {
+		return json({ message: "Failed to fetch trips" }, { status: 500 });
+	} else {
+		return response.data;
+	}
+};

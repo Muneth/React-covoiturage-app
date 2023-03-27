@@ -4,9 +4,9 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState, useEffect } from "react";
 import axiosClient from "../axios";
 import { useStateContext } from "../contexts/ContextProvider";
-import { useLoaderData, json, useNavigate } from "react-router-dom";
+import { useLoaderData, json } from "react-router-dom";
 
-const EditProfil = () => {
+const AddProfil = () => {
 	const { currentUserId } = useStateContext();
 	const [nom, setNom] = useState("");
 	const [prenom, setPrenom] = useState("");
@@ -15,27 +15,20 @@ const EditProfil = () => {
 	const [ville, setVille] = useState("");
 	const [error, setError] = useState({ __html: "" });
 
-	const navigate = useNavigate();
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
-		const data = new URLSearchParams();
-		// data.append("id_user", currentUserId);
+		const data = new FormData();
+		data.append("id_user", currentUserId);
 		data.append("nom", nom);
 		data.append("prenom", prenom);
 		data.append("email", email);
 		data.append("tel", tel);
 		data.append("ville", ville);
 
-		async function editUser() {
+		async function addUser() {
 			try {
-				const response = await axiosClient.put(
-					`/api/personne/${currentUserId}`,
-					data,
-				);
+				const response = await axiosClient.post(`/api/personne`, data);
 				console.log("response.data", response.data);
-				navigate("/profil");
 			} catch (error) {
 				if (error.response) {
 					const backendErrors = error.response.data;
@@ -45,7 +38,7 @@ const EditProfil = () => {
 			}
 		}
 
-		editUser();
+		addUser();
 	};
 
 	const profil = () => {
@@ -53,31 +46,11 @@ const EditProfil = () => {
 	};
 
 	return (
-		<PageComponent title='Modifier votre Info'>
-			<form onSubmit={handleSubmit} action='#' method='PUT'>
+		<PageComponent title='Ajouter les info'>
+			<form onSubmit={handleSubmit} action='#' method='POST'>
 				<div className='space-y-12'>
 					<div className='border-b border-gray-900/10 pb-12'>
 						<div className='mt-10 grid grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-6'>
-							<div className='sm:col-span-3'>
-								<label
-									htmlFor='nom'
-									className='block text-sm font-medium leading-6 text-gray-900'
-								>
-									Nom
-								</label>
-								<div className='mt-2'>
-									<input
-										type='text'
-										name='nom'
-										id='nom'
-										required
-										value={nom}
-										onChange={(e) => setNom(e.target.value)}
-										className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-									/>
-								</div>
-							</div>
-
 							<div className='sm:col-span-3'>
 								<label
 									htmlFor='prenom'
@@ -93,6 +66,26 @@ const EditProfil = () => {
 										required
 										value={prenom}
 										onChange={(e) => setPrenom(e.target.value)}
+										className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+									/>
+								</div>
+							</div>
+
+							<div className='sm:col-span-3'>
+								<label
+									htmlFor='nom'
+									className='block text-sm font-medium leading-6 text-gray-900'
+								>
+									Nom
+								</label>
+								<div className='mt-2'>
+									<input
+										type='text'
+										name='nom'
+										id='nom'
+										required
+										value={nom}
+										onChange={(e) => setNom(e.target.value)}
 										className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
 									/>
 								</div>
@@ -180,4 +173,4 @@ const EditProfil = () => {
 	);
 };
 
-export default EditProfil;
+export default AddProfil;

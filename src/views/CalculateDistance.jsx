@@ -21,7 +21,7 @@ function DistanceCalculator() {
 		e.preventDefault();
 		try {
 			const response = await axios.get(
-				`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destination}&mode=driving&key=AIzaSyBqMthhe7z3RxVI5y5jynoO_GqsXxsGTCw`,
+				`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destination}&mode=driving&key=your_api_key`,
 			);
 			const data = response.data;
 			if (data.status === "OK") {

@@ -1,30 +1,34 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import DefaultLayout from "./components/DefaultLayout";
 import GuestLayout from "./components/GuestLayout";
-import Dashboard from "./views/Dashboard";
+import Search from "./views/Search";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import VosTrajets from "./views/VosTrajets";
 import Publier from "./views/Publier";
 import Profil from "./views/Profil";
+import AddProfil from "./views/AddProfil";
 import EditProfil from "./views/EditProfil";
 import TripsList from "./views/TripsList";
-import Cartails from "./views/CarDetails";
-import AllTrips from "./views/AllTrips";
+import CarDetails from "./views/CarDetails";
+import AllTrips, { loader as trips } from "./views/AllTrips";
 import DistanceCalculator from "./views/CalculateDistance";
+import ErrorPage from "./views/ErrorPage";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <DefaultLayout />,
+		errorElement: <ErrorPage />,
 		children: [
 			{
-				path: "/dashboard",
-				element: <Navigate to='/' />,
+				path: "/",
+				element: <AllTrips />,
+				loader: trips,
 			},
 			{
-				path: "/",
-				element: <Dashboard />,
+				path: "/search",
+				element: <Search />,
 			},
 			{
 				path: "/vostrajets",
@@ -39,6 +43,10 @@ const router = createBrowserRouter([
 				element: <Profil />,
 			},
 			{
+				path: "/addprofil",
+				element: <AddProfil />,
+			},
+			{
 				path: "/editprofil",
 				element: <EditProfil />,
 			},
@@ -48,11 +56,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/cardetails",
-				element: <Cartails />,
-			},
-			{
-				path: "/alltrips",
-				element: <AllTrips />,
+				element: <CarDetails />,
 			},
 			{
 				path: "/distancecalculator",
@@ -63,6 +67,7 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <GuestLayout />,
+		errorElement: <ErrorPage />,
 		children: [
 			{
 				path: "/login",
