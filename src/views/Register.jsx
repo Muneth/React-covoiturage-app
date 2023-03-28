@@ -5,7 +5,7 @@ import axiosClient from "../axios.js";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
 
 export default function Register() {
-	const { setCurrentUser, setUserToken } = useStateContext();
+	const { setCurrentUser, setUserToken, setCurrentUserId } = useStateContext();
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -29,6 +29,7 @@ export default function Register() {
 				});
 				setCurrentUser(data);
 				setUserToken(data.token);
+				setCurrentUserId(data.id);
 				console.log("data", data);
 			} catch (error) {
 				if (error.response) {
