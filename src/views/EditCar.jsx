@@ -1,11 +1,27 @@
 import PageComponent from "../components/PageComponent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axiosClient from "../axios";
 import { useStateContext } from "../contexts/ContextProvider";
 import { useNavigate, useParams } from "react-router-dom";
 
-const CarDetails = () => {
+const EditCar = () => {
 	const { id } = useParams();
+
+	useEffect(() => {
+		async function fetchCar() {
+			try {
+				const response = await axiosClient.get(`/api/voiture/${id}`);
+				console.log(response.data);
+				setMarque(response.data.marque);
+				setModel(response.data.model);
+				setImmatriculation(response.data.immatriculation);
+				setPlaces(response.data.places);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchCar();
+	}, []);
 
 	const [marque, setMarque] = useState("");
 	const [model, setModel] = useState("");
@@ -18,15 +34,15 @@ const CarDetails = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const data = new FormData();
+		const data = new URLSearchParams();
 		data.append("marque", marque);
 		data.append("model", model);
 		data.append("immatriculation", immatriculation);
 		data.append("places", places);
 
-		async function addCar() {
+		async function editCar() {
 			try {
-				const response = await axiosClient.post(`/api/voiture/${id}`, data);
+				const response = await axiosClient.put(`/api/voiture/${id}`, data);
 				navigate("/profil");
 			} catch (error) {
 				if (error.response) {
@@ -36,16 +52,16 @@ const CarDetails = () => {
 				}
 			}
 		}
-		addCar();
+		editCar();
 	};
 
 	return (
-		<PageComponent title='Publier votre trajet'>
+		<PageComponent title='Voiture'>
 			<div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
 				<div className='w-full max-w-md space-y-8'>
 					<div>
 						<h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
-							Ajouter une voiture
+							Modifier votre voiture
 						</h2>
 						{error.__html && (
 							<div
@@ -138,4 +154,4 @@ const CarDetails = () => {
 	);
 };
 
-export default CarDetails;
+export default EditCar;

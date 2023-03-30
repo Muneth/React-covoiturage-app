@@ -11,6 +11,7 @@ import AddProfil from "./views/AddProfil";
 import EditProfil from "./views/EditProfil";
 import TripsList from "./views/TripsList";
 import CarDetails from "./views/CarDetails";
+import EditCar from "./views/EditCar";
 import AllTrips, { loader as trips } from "./views/AllTrips";
 import DistanceCalculator from "./views/CalculateDistance";
 import ErrorPage from "./views/ErrorPage";
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
 				element: <AddProfil />,
 			},
 			{
-				path: "/editprofil",
+				path: "/editprofil/:id",
 				element: <EditProfil />,
 			},
 			{
@@ -55,8 +56,12 @@ const router = createBrowserRouter([
 				element: <TripsList />,
 			},
 			{
-				path: "/cardetails",
+				path: "/addvoiture/:id",
 				element: <CarDetails />,
+			},
+			{
+				path: "/editvoiture/:id",
+				element: <EditCar />,
 			},
 			{
 				path: "/distancecalculator",

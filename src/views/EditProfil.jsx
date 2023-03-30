@@ -4,9 +4,28 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState, useEffect } from "react";
 import axiosClient from "../axios";
 import { useStateContext } from "../contexts/ContextProvider";
-import { useLoaderData, json, useNavigate } from "react-router-dom";
+import { useLoaderData, json, useNavigate, useParams } from "react-router-dom";
 
 const EditProfil = () => {
+	const { id } = useParams();
+
+	useEffect(() => {
+		async function fetchUser() {
+			try {
+				const response = await axiosClient.get(`/api/personne/${id}`);
+				console.log(response.data);
+				setNom(response.data.nom);
+				setPrenom(response.data.prenom);
+				setEmail(response.data.email);
+				setTel(response.data.tel);
+				setVille(response.data.ville);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchUser();
+	}, []);
+
 	const { currentUserId } = useStateContext();
 	const [nom, setNom] = useState("");
 	const [prenom, setPrenom] = useState("");
@@ -34,7 +53,6 @@ const EditProfil = () => {
 					`/api/personne/${currentUserId}`,
 					data,
 				);
-				console.log("response.data", response.data);
 				navigate("/profil");
 			} catch (error) {
 				if (error.response) {
@@ -162,7 +180,6 @@ const EditProfil = () => {
 				<div className='mt-6 flex items-center justify-end gap-x-6'>
 					<button
 						type='submit'
-						// onClick={profil}
 						className='rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 					>
 						Enregistrer

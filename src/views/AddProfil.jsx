@@ -1,10 +1,8 @@
-import React from "react";
 import PageComponent from "../components/PageComponent";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axiosClient from "../axios";
 import { useStateContext } from "../contexts/ContextProvider";
-import { useLoaderData, json } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddProfil = () => {
 	const { currentUserId } = useStateContext();
@@ -15,8 +13,11 @@ const AddProfil = () => {
 	const [ville, setVille] = useState("");
 	const [error, setError] = useState({ __html: "" });
 
+	const navigate = useNavigate();
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		const data = new FormData();
 		data.append("id_user", currentUserId);
 		data.append("nom", nom);
@@ -28,7 +29,7 @@ const AddProfil = () => {
 		async function addUser() {
 			try {
 				const response = await axiosClient.post(`/api/personne`, data);
-				console.log("response.data", response.data);
+				navigate("/profil");
 			} catch (error) {
 				if (error.response) {
 					const backendErrors = error.response.data;
@@ -37,12 +38,11 @@ const AddProfil = () => {
 				}
 			}
 		}
-
 		addUser();
 	};
 
 	const profil = () => {
-		window.location.href = "/profil";
+		navigate("/profil");
 	};
 
 	return (
@@ -155,7 +155,6 @@ const AddProfil = () => {
 				<div className='mt-6 flex items-center justify-end gap-x-6'>
 					<button
 						type='submit'
-						// onClick={profil}
 						className='rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 					>
 						Enregistrer
