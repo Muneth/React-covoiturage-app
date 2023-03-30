@@ -57,12 +57,11 @@ const EditProfil = () => {
 			} catch (error) {
 				if (error.response) {
 					const backendErrors = error.response.data;
-					console.log(backendErrors);
+					console.log(backendErrors + "errorcvbfd");
 					setError({ __html: backendErrors.join("<br />") });
 				}
 			}
 		}
-
 		editUser();
 	};
 
@@ -72,6 +71,17 @@ const EditProfil = () => {
 
 	return (
 		<PageComponent title='Modifier votre Info'>
+			<div>
+				<h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
+					Mettez les informations à jour
+				</h2>
+				{error.__html && (
+					<div
+						className='mt-3 bg-red-500 rounded py-2 px-3 text-white'
+						dangerouslySetInnerHTML={error}
+					></div>
+				)}
+			</div>
 			<form onSubmit={handleSubmit} action='#' method='PUT'>
 				<div className='space-y-12'>
 					<div className='border-b border-gray-900/10 pb-12'>

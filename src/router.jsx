@@ -15,6 +15,8 @@ import EditCar from "./views/EditCar";
 import AllTrips, { loader as trips } from "./views/AllTrips";
 import DistanceCalculator from "./views/CalculateDistance";
 import ErrorPage from "./views/ErrorPage";
+import { ContextProvider, useStateContext } from "./contexts/ContextProvider";
+import axiosClient from "./axios";
 
 const router = createBrowserRouter([
 	{

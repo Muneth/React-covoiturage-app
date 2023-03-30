@@ -47,6 +47,14 @@ const AddProfil = () => {
 
 	return (
 		<PageComponent title='Ajouter les info'>
+			<div>
+				{error.__html && (
+					<div
+						className='mt-3 bg-red-500 rounded py-2 px-3 text-white'
+						dangerouslySetInnerHTML={error}
+					></div>
+				)}
+			</div>
 			<form onSubmit={handleSubmit} action='#' method='POST'>
 				<div className='space-y-12'>
 					<div className='border-b border-gray-900/10 pb-12'>
